@@ -1,0 +1,28 @@
+name: Nakaisan
+id: Nakaisan
+key: Nakaisan
+description: Nakaisan (なかいさん(仲居さん)) serve static and dynamic content with a Plack/PSGI server.
+author_name: taiju
+author_link: http://github.com/taiju
+version: 0.1
+config_settings:
+    NakaisanMountPoint:
+        default: /
+    NakaisanDocumentRoot:
+        default: public
+    NakaisanPHPCGIPath:
+        default:
+    NakaisanDirectoryIndex:
+        default: index.html index.htm index.php
+    NakaisanBootstrapper:
+        default: mtview.php
+    NakaisanPassThroughBootstrapper:
+        default: 0
+applications:
+  nakaisan_proxy:
+    cgi_path: sub { MT->config->NakaisanMountPoint }
+    script: sub { '' }
+plack_middlewares:
+  - name: MT::Nakaisan
+    apply_to:
+      - nakaisan_proxy
