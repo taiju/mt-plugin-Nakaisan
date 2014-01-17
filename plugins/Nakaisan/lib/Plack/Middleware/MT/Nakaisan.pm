@@ -15,10 +15,10 @@ use MT::Blog;
 sub call {
     my ($self, $env) = @_;
 
-    return $self->_php_cgi($env) if $env->{PATH_INFO} =~ /\.php$/;
-
     $env->{PATH_INFO} .= $self->_directory_index($env) if $env->{PATH_INFO} =~ m{/$};
     $env->{DOCUMENT_ROOT} ||= File::Spec->rel2abs(MT->config->NakaisanDocumentRoot);
+
+    return $self->_php_cgi($env) if $env->{PATH_INFO} =~ /\.php$/;
 
     my $res = Plack::App::File->new(
         root => MT->config->NakaisanDocumentRoot,
