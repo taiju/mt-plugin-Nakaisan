@@ -18,11 +18,11 @@ sub call {
     $env->{PATH_INFO} .= $self->_directory_index($env) if $env->{PATH_INFO} =~ m{/$};
     $env->{DOCUMENT_ROOT} ||= File::Spec->rel2abs(MT->config->NakaisanDocumentRoot);
 
-    return $self->_php_cgi($env) if $env->{PATH_INFO} =~ /\.php$/;
-
     my $res = Plack::App::File->new(
         root => MT->config->NakaisanDocumentRoot,
     )->to_app->($env);
+
+    return $self->_php_cgi($env) if $res->[0] ne '404' && $env->{PATH_INFO} =~ /\.php$/;
 
     return $res if $res->[0] ne '404' && !MT->config->NakaisanPassThroughBootstrapper;
 
