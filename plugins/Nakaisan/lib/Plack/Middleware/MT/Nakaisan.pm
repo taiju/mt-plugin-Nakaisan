@@ -60,8 +60,6 @@ sub _directory_index {
 sub _bootstrapper {
     my ($self, $env) = @_;
   
-    return unless MT->config->NakaisanPassThroughBootstrapper;
-  
     my $fi = MT::FileInfo->load({ url => $env->{PATH_INFO} });
     return unless $fi;
   
