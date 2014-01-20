@@ -1,0 +1,14 @@
+<mtapp:setting id="directory_index" label="DirectoryIndex">
+  <input type="text" name="directory_index" id="directory_index" value="<$mt:var name="directory_index"$>" />
+</mtapp:setting>
+
+<mtapp:setting id="bootstrapper" label="Bootstrapper">
+  <input type="text" name="bootstrapper" id="bootstrapper" value="<$mt:var name="bootstrapper"$>" />
+</mtapp:setting>
+
+<mtapp:setting id="pass_through_bootstrapper" label="Pass-Through bootstrapper?">
+  <select name="pass_through_bootstrapper" id="pass_through_bootstrapper">
+    <option value="0"<mt:if name="pass_through_bootstrapper" eq="0"> selected</mt:if>>No</option>
+    <option value="1"<mt:if name="pass_through_bootstrapper" eq="1"> selected</mt:if>>Yes</option>
+  </select>
+</mtapp:setting>

@@ -5,6 +5,20 @@ description: Nakaisan (なかいさん(仲居さん)) serve static and dynamic c
 author_name: taiju
 author_link: http://github.com/taiju
 version: 0.1
+
+blog_config_template: blog_config_setting.tmpl
+
+settings:
+  directory_index:
+    default: index.html index.htm index.php
+    scope: blog
+  bootstrapper:
+    default: mtview.php
+    scope: blog
+  pass_through_bootstrapper:
+    default: 0
+    scope: blog
+
 config_settings:
     NakaisanMountPoint:
         default: /
@@ -12,12 +26,7 @@ config_settings:
         default: public
     NakaisanPHPCGIPath:
         default:
-    NakaisanDirectoryIndex:
-        default: index.html index.htm index.php
-    NakaisanBootstrapper:
-        default: mtview.php
-    NakaisanPassThroughBootstrapper:
-        default: 0
+
 applications:
   nakaisan_proxy:
     cgi_path: sub { MT->config->NakaisanMountPoint }

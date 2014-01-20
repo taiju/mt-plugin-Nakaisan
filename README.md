@@ -46,17 +46,19 @@ Default is `public`.
 
 Default is nothing.
 
-## NakaisanDirectoryIndex
+# PLUGIN SETTINGS (BLOG)
+
+## directory_index
 
 Default is `index.html index.htm index.php`.
 
-## NakaisanBootstrapper
+## bootstrapper
 
 Default is `mtview.php`.
 
-## NakaisanPassThroughBootstrapper
+## pass_through_bootstrapper
 
-Default is `0`.
+Default is `No`.
 
 # SEE ALSO
 

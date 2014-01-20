@@ -12,6 +12,8 @@ use Plack::App::PHPCGI;
 use MT::FileInfo;
 use MT::Blog;
 
+my $plugin = MT->component('Nakaisan');
+
 sub call {
     my ($self, $env) = @_;
 
@@ -22,9 +24,14 @@ sub call {
         root => MT->config->NakaisanDocumentRoot,
     )->to_app->($env);
 
+    my $fi = MT::FileInfo->load({ url => $env->{PATH_INFO} });
+    return $res unless $fi;
+
+    $self->{blog_id} = $fi->blog_id;
+
     return $self->_php_cgi($env) if $res->[0] ne '404' && $env->{PATH_INFO} =~ /\.php$/;
 
-    return $res if $res->[0] ne '404' && !MT->config->NakaisanPassThroughBootstrapper;
+    return $res if $res->[0] ne '404' && !$plugin->get_config_value('pass_through_bootstrapper', "blog:$self->{blog_id}");
 
     my $bootstrapper = $self->_bootstrapper($env);
     return $res unless $bootstrapper;
@@ -48,7 +55,7 @@ sub _php_cgi {
 sub _directory_index {
     my ($self, $env) = @_;
 
-    my @dir_indexes = split /\s+/, MT->config->NakaisanDirectoryIndex;
+    my @dir_indexes = split /\s+/, $plugin->get_config_value('directory_index', "blog:$self->{blog_id}");
 
     my @exist_dir_indexes = grep {
         -f MT->config->NakaisanDocumentRoot . $env->{PATH_INFO} . $_;
@@ -60,13 +67,10 @@ sub _directory_index {
 sub _bootstrapper {
     my ($self, $env) = @_;
   
-    my $fi = MT::FileInfo->load({ url => $env->{PATH_INFO} });
-    return unless $fi;
-  
-    my ($domain, $path) = MT::Blog->load($fi->blog_id)->raw_site_url;
+    my ($domain, $path) = MT::Blog->load($self->{blog_id})->raw_site_url;
     $path ||= '';
 
-    MT->config->NakaisanDocumentRoot . "/$path" . MT->config->NakaisanBootstrapper;
+    MT->config->NakaisanDocumentRoot . "/$path" . $plugin->get_config_value('bootstrapper', "blog:$self->{blog_id}");
 }
 
 1;
