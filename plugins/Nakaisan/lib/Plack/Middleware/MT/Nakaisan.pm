@@ -28,7 +28,7 @@ sub call {
 
     my $bootstrapper = $self->_bootstrapper($env);
     return $res unless $bootstrapper;
-    return $res unless -e $bootstrapper;
+    return $res unless -f $bootstrapper;
 
     $self->_php_cgi($env, $bootstrapper);
 }
@@ -51,7 +51,7 @@ sub _directory_index {
     my @dir_indexes = split /\s+/, MT->config->NakaisanDirectoryIndex;
 
     my @exist_dir_indexes = grep {
-        -e MT->config->NakaisanDocumentRoot . $env->{PATH_INFO} . $_;
+        -f MT->config->NakaisanDocumentRoot . $env->{PATH_INFO} . $_;
     } @dir_indexes;
 
     @exist_dir_indexes ? $exist_dir_indexes[0] : $dir_indexes[0];
