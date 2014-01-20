@@ -10,7 +10,8 @@ Nakaisan ([なかいさん(仲居さん)](http://ja.wikipedia.org/wiki/%E4%BB%B2
 
 1. Put cpanfile /path/to/mt.
 2. Change working directory /path/to/mt.
-3. Install CPAN modules. (What's carton? => [Carton](https://github.com/miyagawa/carton))  
+    `$ cd /path/to/mt`
+3. Install CPAN modules with carton. (What's carton? => [Carton](https://github.com/miyagawa/carton))
     `$ carton install`
 4. Add a new line configuration directive `LocalLib local` to mt-config.cgi.  
 5. Put Nakaisan /path/to/plugins.
@@ -23,16 +24,17 @@ Nakaisan ([なかいさん(仲居さん)](http://ja.wikipedia.org/wiki/%E4%BB%B2
 2. Set website URL http://localhost:5000/.
 3. Change working directory /path/to/mt and run the starman.  
     `$ starman --pid=mt.pid mt.psgi`
-4. Browse to http://localhost:5000/
+4. Browse http://localhost:5000/.
 
 # REQUIREMENTS
 
+- Movable Type >= 5.2.7
 - Plack::App::PHPCGI
 - php-cgi command
 
 # CONFIGURATION DIRECTIVES
 
-## NakaisanMoutPoint
+## NakaisanMountPoint
 
 Default is `/`.
 
